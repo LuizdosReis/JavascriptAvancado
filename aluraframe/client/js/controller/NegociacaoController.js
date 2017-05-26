@@ -25,7 +25,6 @@ class NegociacaoController{
 
         this._mensagemView.update(this._mensagem);
 
-        this._limpaMensagem();
     }
 
     _criaNegociacao(){
@@ -45,12 +44,20 @@ class NegociacaoController{
 
     }
 
-    _limpaMensagem(){
-        this._inputData.addEventListener('keypress', () => {
+    limpaMensagem(){
             this._mensagem.texto = '';
+            this._mensagemView.update(this._mensagem);
+    }
 
-             this._mensagemView.update(this._mensagem);
-        });
+    apaga(){
+        this._listaNegociacoes.apaga();
+
+        this._negociacoesView.update(this._listaNegociacoes);
+
+        this._mensagem.texto = 'Negociações apagadas com sucesso';
+
+        this._mensagemView.update(this._mensagem);
+
     }
 
 
