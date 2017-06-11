@@ -16,6 +16,10 @@ class NegociacaoService{
     }).catch(erro => {throw new Error(erro)});
   }
 
+  ordena(coluna){
+
+  }
+
   obterNegociacoesDaSemana(){
       return this._http
       .get('negociacoes/semana')

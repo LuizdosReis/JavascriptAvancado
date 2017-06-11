@@ -9,7 +9,9 @@ class NegociacaoController{
     this._listaNegociacoes =  new Bind(
       new ListaNegociacoes(),
       new NegociacoesView($('#negociacoesView')),
-      'adiciona', 'apaga');
+      'adiciona', 'apaga','ordena', 'inverteOrdem');
+
+    this._ordemAtual = '';
 
       this._mensagem = new Bind(
         new Mensagem(),
@@ -26,15 +28,24 @@ class NegociacaoController{
 
       }
 
+      ordena(coluna){
+        if(coluna == this._ordemAtual){
+          this._listaNegociacoes.inverteOrdem();
+        }else{
+          this._listaNegociacoes.ordena((a,b) => a[coluna] - b[coluna]);
+        }
+        this._ordemAtual = coluna;
+      }
+
       importarNegociacoes(){
 
         let service = new NegociacaoService();
 
         service.obterNegociacoes()
-          .then(negociacoes => {
-              negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
-              this._mensagem.texto = 'Negociações adicionadas com sucesso';
-          }).catch(error => this.mensagem.texto = error);
+        .then(negociacoes => {
+          negociacoes.forEach(negociacao => this._listaNegociacoes.adiciona(negociacao));
+          this._mensagem.texto = 'Negociações adicionadas com sucesso';
+        }).catch(error => this.mensagem.texto = error);
       }
 
       _criaNegociacao(){
